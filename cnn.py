@@ -12,26 +12,20 @@ from keras import layers
 from keras import models
 from IPython import display
 
-# Set the seed value for experiment reproducibility.
+
 seed = 42
 tf.random.set_seed(seed)
 np.random.seed(seed)
 
-
-
 DATASET_PATH = 'data/mini_speech_commands'
 
 data_dir = pathlib.Path(DATASET_PATH)
-if not data_dir.exists():
-  tf.keras.utils.get_file(
-      'mini_speech_commands.zip',
-      origin="http://storage.googleapis.com/download.tensorflow.org/data/mini_speech_commands.zip",
-      extract=True,
-      cache_dir='.', cache_subdir='data')
   
 commands = np.array(tf.io.gfile.listdir(str(data_dir)))
 commands = commands[commands != 'README.md']
 print('Commands:', commands)
+
+
   
 filenames = tf.io.gfile.glob(str(data_dir) + '/*/*')
 filenames = tf.random.shuffle(filenames)
@@ -41,17 +35,22 @@ print('Number of examples per label:',
       len(tf.io.gfile.listdir(str(data_dir/commands[0]))))
 print('Example file tensor:', filenames[0])
 
-train_files = filenames[:6400]
-val_files = filenames[6400: 6400 + 800]
-test_files = filenames[-800:]
+
+train_files = filenames[:600]
+val_files = filenames[600: 600 + 75]
+test_files = filenames[-75:]
 
 print('Training set size', len(train_files))
 print('Validation set size', len(val_files))
 print('Test set size', len(test_files))
 
-test_file = tf.io.read_file(DATASET_PATH+'/down/0a9f9af7_nohash_0.wav')
+
+
+test_file = tf.io.read_file(DATASET_PATH+'/hola/hol14.wav')
 test_audio, _ = tf.audio.decode_wav(contents=test_file)
 test_audio.shape
+
+
 
 def decode_audio(audio_binary):
   # Decode WAV-encoded audio files to `float32` tensors, normalized
@@ -275,7 +274,7 @@ plt.xlabel('Prediction')
 plt.ylabel('Label')
 plt.show()
 
-sample_file = data_dir/'no/01bb6a2a_nohash_0.wav'
+sample_file = data_dir/'hola/hola2.wav'
 
 sample_ds = preprocess_dataset([str(sample_file)])
 

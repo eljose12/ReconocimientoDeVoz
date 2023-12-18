@@ -5,7 +5,7 @@ from reconocedor import *
 engine = pyttsx3.init()
 
 # Configurar la velocidad del habla (rango entre 0 y 1)
-engine.setProperty('rate', 150)
+engine.setProperty('rate', 120)
 
 # Configurar el volumen (rango entre 0 y 1)
 engine.setProperty('volume', 0.9)
@@ -87,3 +87,5 @@ while True:
     engine.say(respuesta)
     engine.runAndWait()
     print(respuesta)
+    if comando == "adios":
+        break
